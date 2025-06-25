@@ -30,7 +30,7 @@ namespace Grupo1NotasMVVM.Models
                 // De cada archivo, crear un objeto Note
                 .Select(filename => new Note()
                 {
-                    FileName = filename,
+                    Filename = filename,
                     Text = File.ReadAllText(filename),
                     Date = File.GetLastWriteTime(filename)
                 })

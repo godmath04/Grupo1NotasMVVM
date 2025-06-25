@@ -8,10 +8,10 @@ namespace Grupo1NotasMVVM.Models
 {
     internal class About
     {
-        public string Nombre => "Luis Elian Pineda ";
-        public string Descripcion => "Un about regenerico";
-
-        public string Icono => "pinguino.png";
+        public string Nombre { get; set; }
+        public int Edad { get; set; }
+        public string DeporteFavorito { get; set; }
+        public string Foto { get; set; }
 
     }
 }

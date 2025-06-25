@@ -2,24 +2,36 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Grupo1NotasMVVM.Views.AboutPage"
+             xmlns:viewModels="clr-namespace:Grupo1NotasMVVM.ViewModels"
              xmlns:models="clr-namespace:Grupo1NotasMVVM.Models"
-             x:DataType="models:About"
+             x:DataType="viewModels:AboutViewModel"
              Title="AboutPage">
     <ContentPage.BindingContext>
-        <models:About />
+        <viewModels:AboutViewModel/>
     </ContentPage.BindingContext>
-    <VerticalStackLayout Spacing="10" Margin="10">
-        <Image Source="{Binding Icono}" HeightRequest="100" WidthRequest="100" />
 
-        <Label Text="{Binding Nombre}"
-           FontAttributes="Bold"
-           FontSize="24"
-           HorizontalOptions="Center" />
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="15">
+            <Label Text="Miembros del equipo" FontSize="24" HorizontalOptions="Center" FontAttributes="Bold" />
 
-        <Label Text="{Binding Descripcion}"
-           FontSize="18"
-           HorizontalOptions="Center"
-           HorizontalTextAlignment="Center"
-           LineBreakMode="WordWrap" />
-    </VerticalStackLayout>
+            <CollectionView ItemsSource="{Binding Miembros}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:About">
+                        <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="5">
+                            <HorizontalStackLayout Spacing="15">
+                                <Image Source="{Binding Foto}" HeightRequest="60" WidthRequest="60" />
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding Nombre}" FontAttributes="Bold" FontSize="18"/>
+                                    <Label Text="{Binding Edad, StringFormat='Edad: {0}'}" />
+                                    <Label Text="{Binding DeporteFavorito, StringFormat='Deporte favorito: {0}'}" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+
+
 </ContentPage>

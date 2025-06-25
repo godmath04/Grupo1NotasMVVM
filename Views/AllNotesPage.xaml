@@ -1,34 +1,51 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:models="clr-namespace:Grupo1NotasMVVM.Models"
+             xmlns:viewModels="clr-namespace:Grupo1NotasMVVM.ViewModels"
              x:Class="Grupo1NotasMVVM.Views.AllNotesPage"
-             Title="AllNotesPage">
+             Title="Mis notas"
+             NavigatedTo="ContentPage_NavigatedTo"
+             x:DataType="viewModels:NotesViewModel">
+
+    <ContentPage.BindingContext>
+        <viewModels:NotesViewModel />
+    </ContentPage.BindingContext>
+
     <!-- Anadir el item a la tool bart-->
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Anadir una nueva nota" Clicked="Add_Clicked" IconImageSource="{FontImage Glyph='+', Color=Black, Size=22}" />
+        <ToolbarItem Text="Add" Command="{Binding NewCommand}" IconImageSource="{FontImage Glyph='+', Color=Black, Size=22}" />
     </ContentPage.ToolbarItems>
 
     <!-- Mostrar las notas como lista -->
-    <CollectionView x:Name="notesCollection"
-                    ItemsSource="{Binding Notes}"
-                    Margin="20"
-                    SelectionMode="Single"
-                    SelectionChanged="notesCollection_SelectionChanged">
+    <Grid RowDefinitions="*,Auto">
+        <!-- Lista de notas -->
+        <CollectionView x:Name="notesCollection"
+                        Grid.Row="0"
+                        ItemsSource="{Binding AllNotes}"
+                        Margin="20"
+                        SelectionMode="Single"
+                        SelectionChangedCommand="{Binding SelectNoteCommand}"
+                        SelectionChangedCommandParameter="{Binding x:DataType='CollectionView', Source={RelativeSource Self}, Path=SelectedItem}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
 
-        <!-- Como se ve la coleccion de items -->
-        <CollectionView.ItemsLayout>
-            <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
-        </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="viewModels:NoteViewModel">
+                    <StackLayout>
+                        <Label Text="{Binding Text}" FontSize="22"/>
+                        <Label Text="{Binding Date}" FontSize="14" TextColor="Silver"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
-        <!-- Apariencia -->
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="models:Note">
-                <StackLayout>
-                    <Label Text="{Binding Text}" FontSize="22"/>
-                    <Label Text="{Binding Date}" FontSize="14" TextColor="Silver"/>
-                </StackLayout>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+        <!-- Footer con versión -->
+        <StackLayout Grid.Row="1"
+                     BackgroundColor="Transparent"
+                     Padding="0,10"
+                     HorizontalOptions="Center">
+            <Label Text="v1.0.0" FontSize="12" TextColor="Gray"/>
+        </StackLayout>
+    </Grid>
 </ContentPage>
