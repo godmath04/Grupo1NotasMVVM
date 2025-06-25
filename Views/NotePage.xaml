@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:Grupo1NotasMVVM.ViewModels"
              x:Class="Grupo1NotasMVVM.Views.NotePage"
-             Title="NotePage"
+             Title="Crea tu nueva nota"
              x:DataType="viewModels:NoteViewModel">
 
     <ContentPage.BindingContext>
