@@ -3,29 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Grupo1NotasMVVM.Models
 {
     internal class Note
     {
-        public string FileName { get; set; }
+        public string Filename { get; set; }
         public string Text { get; set; }
         public DateTime Date { get; set; }
 
         //Constructor
         public Note()
         {
-            FileName = $"{Path.GetRandomFileName()}.notas.txt";
+            Filename = $"{Path.GetRandomFileName()}.notas.txt";
             Date = DateTime.Now;
             Text = "";
         }
 
         //Metodos para el control, guardado o eliminacion
         public void Save() =>
-            File.WriteAllText(System.IO.Path.Combine(FileSystem.AppDataDirectory, FileName), Text);
+            File.WriteAllText(System.IO.Path.Combine(FileSystem.AppDataDirectory, Filename), Text);
 
         public void Delete() =>
-            File.Delete(System.IO.Path.Combine(FileSystem.AppDataDirectory, FileName));
+            File.Delete(System.IO.Path.Combine(FileSystem.AppDataDirectory, Filename));
 
         //Cargar una nota por nombre de archivo
         public static Note Load(string filename)
@@ -38,7 +39,7 @@ namespace Grupo1NotasMVVM.Models
             return
                 new()
                 {
-                    FileName = Path.GetFileName(filename),
+                    Filename = Path.GetFileName(filename),
                     Text = File.ReadAllText(filename),
                     Date = File.GetLastWriteTime(filename)
                 };
@@ -62,6 +63,5 @@ namespace Grupo1NotasMVVM.Models
                     // With the final collection of notes, order them by date
                     .OrderByDescending(note => note.Date);
         }
-
     }
 }
