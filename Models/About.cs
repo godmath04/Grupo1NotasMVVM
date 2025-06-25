@@ -9,7 +9,7 @@ namespace Grupo1NotasMVVM.Models
     internal class About
     {
         public string Nombre => "Luis Elian Pineda ";
-        public string Descripcion => "Lo que mueve mi vida es la musica, la politica y el software";
+        public string Descripcion => "Un about regenerico";
 
         public string Icono => "pinguino.png";
 

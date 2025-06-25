@@ -1,12 +1,12 @@
 namespace Grupo1NotasMVVM.Views;
+[QueryProperty(nameof(ItemId), nameof(ItemId))]
 
 public partial class NotePage : ContentPage
 {
     private string _fileName;
+
     public NotePage()
-	{
-
-
+    {
         InitializeComponent();
 
         string appDataPath = FileSystem.AppDataDirectory;
