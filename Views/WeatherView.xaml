@@ -8,21 +8,57 @@
         <localnamespace:WeatherViewModel/>
     </ContentPage.BindingContext>
 
-    <VerticalStackLayout>
-        <Label 
-            x:Name="lblTemperatura"
-            
-            Text="{Binding WeatherDataInfo.current.temperature_2m, StringFormat='Temperatura: {0} °C'}"
-            />
+    <VerticalStackLayout
+        BackgroundColor="Aqua">
 
         <Label 
-            x:Name="lblRain"
-            Text="{Binding WeatherDataInfo.current.rain, StringFormat='Lluvia: {0} mm'}"
-            />
-        <Label 
-            x:Name="lblHumidity"
-            Text="{Binding WeatherDataInfo.current.relative_humidity_2m, StringFormat='Humedad: {0} %'}"
-            />
-        
+            x:Name="lblTitleWeather"
+            TextColor="Black"
+            Text="Quito"
+            FontSize="Title"/>
+
+        <HorizontalStackLayout>
+            
+
+            <Label 
+                x:Name="lblWeatherTime"
+                TextColor="Black"
+                Text="{Binding WeatherDataInfo.current.time}"
+                />
+
+        </HorizontalStackLayout>
+
+        <Image 
+            x:Name="icon_sun"
+            Source="sun.png"
+            MaximumHeightRequest="200"
+            MaximumWidthRequest="200"/>
+
+        <Frame
+            Margin="20,10,20,0"
+            Padding="15"
+            CornerRadius="10"
+            BorderColor="LightGray"
+            HasShadow="False">
+
+            <VerticalStackLayout Spacing="5">
+                
+                    <Label 
+                        x:Name="lblTemperatura"
+                        Text="{Binding WeatherDataInfo.current.temperature_2m, StringFormat='Temperatura: {0} °C'}"
+                        />
+                    <Label 
+                        x:Name="lblRain"
+                        Text="{Binding WeatherDataInfo.current.rain, StringFormat='Lluvia: {0} mm'}"
+                        />
+                    <Label 
+                        x:Name="lblHumidity"
+                        Text="{Binding WeatherDataInfo.current.relative_humidity_2m, StringFormat='Humedad: {0} %'}"
+                        />
+
+            </VerticalStackLayout>
+
+        </Frame>
+   
     </VerticalStackLayout>
 </ContentPage>
