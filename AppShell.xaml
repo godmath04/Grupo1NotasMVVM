@@ -16,10 +16,18 @@
         />
 
         <ShellContent
+        Title="Weather"
+        ContentTemplate="{DataTemplate Views:WeatherView}" 
+        Icon="{OnPlatform 'iconweather.png'}"
+        />
+
+        <ShellContent
         Title="About"
         ContentTemplate="{DataTemplate Views:AboutPage}" 
         Icon="{OnPlatform 'iconoabout.png'}"
         />
+
+
     </TabBar>
 
 </Shell>
