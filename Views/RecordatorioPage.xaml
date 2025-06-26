@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Grupo1NotasMVVM.ViewModels"
+             x:Class="Grupo1NotasMVVM.Views.RecordatorioPage"
+             Title="RecordatorioPage">
+    
+    <ContentPage.BindingContext>
+        <vm:RecordatorioViewModel />
+    </ContentPage.BindingContext>
+
+    <VerticalStackLayout Padding="20">
+        <Entry Placeholder="Texto del recordatorio" Text="{Binding Texto}" />
+        <TimePicker Time="{Binding FechaHora}" />
+        <Switch IsToggled="{Binding Activo}" />
+        <Button Text="Agregar" Command="{Binding AgregarCommand}" />
+
+        <CollectionView ItemsSource="{Binding Recordatorios}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Eliminar"
+                                           BackgroundColor="Red"
+                                           Command="{Binding BindingContext.EliminarCommand, Source={x:Reference Name=MainPage}}"
+                                           CommandParameter="{Binding .}" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Grid Padding="10">
+                            <Label Text="{Binding Texto}" />
+                            <Label Text="{Binding FechaHora}" />
+                            <Label Text="{Binding Activo}" />
+                        </Grid>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

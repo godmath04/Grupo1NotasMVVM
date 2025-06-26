@@ -26,7 +26,11 @@
         ContentTemplate="{DataTemplate Views:AboutPage}" 
         Icon="{OnPlatform 'iconoabout.png'}"
         />
-
+        <ShellContent
+        Title="Recordatorios"
+        ContentTemplate="{DataTemplate Views:RecordatorioPage}"
+        Icon="{OnPlatform 'iconorecordatorio.png'}" 
+        />
 
     </TabBar>
 
