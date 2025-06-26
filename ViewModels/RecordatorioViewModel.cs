@@ -2,31 +2,59 @@
 using CommunityToolkit.Mvvm.Input;
 using Grupo1NotasMVVM.Models;
 using Grupo1NotasMVVM.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-
 
 namespace Grupo1NotasMVVM.ViewModels
 {
-    public partial class RecordatorioViewModel : ObservableObject
+    public class RecordatorioViewModel : ObservableObject
     {
         private readonly RecordatorioService _servicio = new();
 
-        [ObservableProperty]
-        private string texto;
+        private string _texto;
+        public string Texto
+        {
+            get => _texto;
+            set => SetProperty(ref _texto, value);
+        }
 
-        [ObservableProperty]
-        private TimeSpan fechaHora;
+        private TimeSpan _fechaHora;
+        public TimeSpan FechaHora
+        {
+            get => _fechaHora;
+            set => SetProperty(ref _fechaHora, value);
+        }
 
-        [ObservableProperty]
-        private bool activo;
+        private bool _activo;
+        public bool Activo
+        {
+            get => _activo;
+            set => SetProperty(ref _activo, value);
+        }
+
+        private Recordatorio _recordatorioSeleccionado;
+        public Recordatorio RecordatorioSeleccionado
+        {
+            get => _recordatorioSeleccionado;
+            set
+            {
+                SetProperty(ref _recordatorioSeleccionado, value);
+                HaySeleccion = value != null;
+            }
+        }
+
+        private bool _haySeleccion;
+        public bool HaySeleccion
+        {
+            get => _haySeleccion;
+            set => SetProperty(ref _haySeleccion, value);
+        }
 
         public ObservableCollection<Recordatorio> Recordatorios { get; } = new();
+
+        public ICommand CargarCommand { get; }
+        public ICommand AgregarCommand { get; }
+        public ICommand EliminarCommand { get; }
 
         public RecordatorioViewModel()
         {
@@ -36,10 +64,6 @@ namespace Grupo1NotasMVVM.ViewModels
 
             CargarCommand.Execute(null);
         }
-
-        public ICommand CargarCommand { get; }
-        public ICommand AgregarCommand { get; }
-        public ICommand EliminarCommand { get; }
 
         private async Task CargarAsync()
         {
@@ -60,15 +84,20 @@ namespace Grupo1NotasMVVM.ViewModels
 
             Recordatorios.Add(nuevo);
             await _servicio.GuardarAsync(Recordatorios.ToList());
+
             Texto = string.Empty;
             FechaHora = TimeSpan.Zero;
             Activo = false;
         }
 
-        private async Task EliminarAsync(Recordatorio r)
+        private async Task EliminarAsync(Recordatorio recordatorio)
         {
-            Recordatorios.Remove(r);
-            await _servicio.GuardarAsync(Recordatorios.ToList());
+            if (recordatorio != null)
+            {
+                Recordatorios.Remove(recordatorio);
+                await _servicio.GuardarAsync(Recordatorios.ToList());
+                RecordatorioSeleccionado = null;
+            }
         }
     }
 }
