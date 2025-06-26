@@ -1,0 +1,44 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Grupo1NotasMVVM.ViewModels"
+             x:Class="Grupo1NotasMVVM.Views.RecordatorioPage"
+             Title="RecordatorioPage">
+
+    <ContentPage.BindingContext>
+        <vm:RecordatorioViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+
+            <Entry Placeholder="Texto del recordatorio" Text="{Binding Texto}" />
+            <TimePicker Time="{Binding FechaHora}" />
+            <Switch IsToggled="{Binding Activo}" />
+            <Button Text="Agregar" Command="{Binding AgregarCommand}" />
+
+            <CollectionView ItemsSource="{Binding Recordatorios}"
+                    SelectionMode="Single"
+                    SelectedItem="{Binding RecordatorioSeleccionado, Mode=TwoWay}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="Gray" Margin="5" Padding="10">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Texto}" FontAttributes="Bold"/>
+                                <Label Text="{Binding FechaHora}" FontSize="Small"/>
+                                <Label Text="{Binding Activo}" FontSize="Small"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+            <Button Text="Eliminar"
+            TextColor="White"
+            BackgroundColor="Red"
+            Command="{Binding EliminarCommand}"
+            CommandParameter="{Binding RecordatorioSeleccionado}"
+            IsVisible="{Binding HaySeleccion}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
